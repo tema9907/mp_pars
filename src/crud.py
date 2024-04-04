@@ -1,5 +1,6 @@
 import asyncio
 import json
+import uuid
 from datetime import datetime
 
 import aiohttp
@@ -25,7 +26,7 @@ async def add_new_announcement(json_data):
             return '1'
         try:
             announce = Announce(
-
+                id = uuid.uuid4(),
                 announce_number=str(data.get('id')),
                 name=data.get('name_ru'),
                 status_id='Опубликовано' if data.get('ref_buy_statuses_id') == 1 else 'Закрыт',
@@ -39,7 +40,7 @@ async def add_new_announcement(json_data):
                     'end_date') else None,
                 organizer=data.get('organizer').get("bin") + " " + data.get('organizer').get('name_ru'),
                 lots_quantity=len(data.get('lots')),
-                sum_value=float(data.get("amount")) if data.get("amount") else None,
+                sum=float(data.get("amount")) if data.get("amount") else None,
                 url=f'https://eep.mitwork.kz/ru/publics/buy/{data.get("id")}',
                 platform='mitwork',
                 legal_address=data.get('organizer').get('address'),
@@ -65,6 +66,7 @@ async def add_new_announcement(json_data):
                             response_text = await response.text()
                             lots = json.loads(response_text)
                             lot = Lot_announce(
+                                id = uuid.uuid4(),
                                 announce_id=announce.id,
                                 ktru_code=lots.get('ref_enstru_code'),
                                 ktru_name=lots.get('name_ru'),
