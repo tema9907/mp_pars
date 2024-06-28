@@ -14,7 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 80
 
 # Make the start.sh script executable
-RUN chmod +x start.sh
-
-# Run start.sh when the container launches
-CMD ["./start.sh"]
+CMD ["python","-m", "src.parser"]

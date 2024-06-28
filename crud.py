@@ -40,7 +40,7 @@ async def add_new_announcement(json_data):
                     'end_date') else None,
                 organizer=data.get('organizer').get("bin") + " " + data.get('organizer').get('name_ru'),
                 lots_quantity=len(data.get('lots')),
-                sum=float(data.get("amount")) if data.get("amount") else None,
+                sum_value=float(data.get("amount")) if data.get("amount") else None,
                 url=f'https://eep.mitwork.kz/ru/publics/buy/{data.get("id")}',
                 platform='mitwork',
                 legal_address=data.get('organizer').get('address'),

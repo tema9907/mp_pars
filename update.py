@@ -36,7 +36,7 @@ async def update_announcements():
     while True:
         logging.info('======================Update announcements task started======================')
         await asyncio.sleep(30)
-        stmt = select(Announce).where(Announce.status_id == 'Опубликовано')
+        stmt = select(Announce).where(Announce.status_id == 'Опубликовано', Announce.platform == 'mitwork')
         async with Session() as session:
             result = await session.execute(stmt)
         open_announcements = result.scalars().all()

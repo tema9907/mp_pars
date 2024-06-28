@@ -1,10 +1,35 @@
 version: '3'
 services:
-  app:
+  mw_parser:
     build:
       context: .
-      dockerfile: Dockerfile
-    ports:
-      - "4000:80"
+      dockerfile: pars.dockerfile
+    container_name: mitwork_parser
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "512m"
+        max-file: "3"
     volumes:
-      - .:/app
+      - .:/parserok-dir
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  mw_update:
+    build:
+      context: .
+      dockerfile: update.dockerfile
+    container_name: mitwork_updater
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "512m"
+        max-file: "3"
+    volumes:
+      - .:/parserok-dir
+    environment:
+      - PYTHONUNBUFFERED=1
+
+
